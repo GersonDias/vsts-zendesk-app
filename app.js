@@ -392,6 +392,12 @@
       } else {
         $modal.find('.severityInput').hide();
       }
+      
+      if (this.hasFieldDefined(workItemType, "w12.W12.DevelopmentDate")) {
+          $modal.find('.developmentDate').show();
+      } else {
+          $modal.find('.developmentDate').hide();   
+      }
     },
 
     onNewCopyDescriptionClick: function (event) {
@@ -426,6 +432,7 @@
 
       if (areaId) {
         operations.push(this.buildPatchToAddWorkItemField("System.AreaId", areaId));
+      }
 
       if (this.hasFieldDefined(workItemType, "Microsoft.VSTS.Common.Severity") && $modal.find('#severity').val()) {
         operations.push(this.buildPatchToAddWorkItemField("Microsoft.VSTS.Common.Severity", $modal.find('#severity').val()));
@@ -436,7 +443,11 @@
       }
 
       if (this.hasFieldDefined(workItemType, "Microsoft.VSTS.TCM.ReproSteps")) {
-        operations.push(this.buildPatchToAddWorkItemField("Microsoft.VSTS.TCM.ReproSteps", description));
+          operations.push(this.buildPatchToAddWorkItemField("Microsoft.VSTS.TCM.ReproSteps", description));
+      }
+      
+      if (this.hasFieldDefined(workItemType, "w12.W12.DevelopmentDate") && $modal.find('#developmentDate').val()) {
+          operations.push(this.buildPatchToAddWorkItemField("w12.W12.DevelopmentDate", new Date($modal.find('#developmentDate').val() + ' 00:00:00')));
       }
 
       //Set tag
